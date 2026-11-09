@@ -15,8 +15,6 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 BOT_TOKEN = os.getenv("BOT_TOKEN", "BU_YERGA_TOKEN")      # @BotFather beradi
 ADMIN_ID = int(os.getenv("ADMIN_ID", "0"))                 # sizning Telegram ID
 CHANNEL = os.getenv("CHANNEL", "")                         # majburiy obuna: "@kanal" (bo'sh = o'chiq)
-YOUTUBE_URL = os.getenv("YOUTUBE_URL", "https://youtube.com/")
-INSTAGRAM_URL = os.getenv("INSTAGRAM_URL", "https://instagram.com/")
 TOTAL = 36
 DB_FILE = "videos.json"
 CARTOON_NAME = "🐾 Hayvonlar olami"
@@ -44,7 +42,6 @@ DB = load_db()
 MAIN_KB = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text="🎬 Videolar")],
-        [KeyboardButton(text="📺 YouTube"), KeyboardButton(text="📸 Instagram")],
     ],
     resize_keyboard=True,
 )
@@ -108,16 +105,6 @@ async def videos(m: Message):
     if not await is_subscribed(m.from_user.id):
         return await m.answer("Avval kanalga obuna bo'ling 👇", reply_markup=sub_kb())
     await m.answer(f"{CARTOON_NAME}\nQismni tanlang 👇", reply_markup=episodes_kb())
-
-
-@dp.message(F.text == "📺 YouTube")
-async def yt(m: Message):
-    await m.answer(f"📺 YouTube kanalimiz:\n{YOUTUBE_URL}")
-
-
-@dp.message(F.text == "📸 Instagram")
-async def ig(m: Message):
-    await m.answer(f"📸 Instagram sahifamiz:\n{INSTAGRAM_URL}")
 
 
 @dp.callback_query(F.data == "check")
